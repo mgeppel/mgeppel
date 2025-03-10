@@ -1,0 +1,35 @@
+import os
+import shutil
+
+def organize_files(directory):
+    # Ensure the directory exists
+    if not os.path.exists(directory):
+        print("Directory does not exist!")
+        return
+
+    # Loop through all files in the directory
+    for filename in os.listdir(directory):
+        file_path = os.path.join(directory, filename)
+
+        # Skip if it's a directory
+        if os.path.isdir(file_path):
+            continue
+
+        # Get the file extension
+        file_extension = filename.split('.')[-1].lower()
+
+        # Define the destination folder based on extension
+        dest_folder = os.path.join(directory, file_extension + '_files')
+        
+        # Create the folder if it doesn't exist
+        if not os.path.exists(dest_folder):
+            os.makedirs(dest_folder)
+
+        # Move the file
+        shutil.move(file_path, os.path.join(dest_folder, filename))
+        print(f"Moved {filename} to {dest_folder}")
+
+# Example usage
+if __name__ == "__main__":
+    target_directory = input("Enter the directory to organize (e.g., C:/Users/You/Downloads): ")
+    organize_files(target_directory)
